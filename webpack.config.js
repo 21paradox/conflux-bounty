@@ -91,6 +91,9 @@ function cpFile(inFilePath, outFilePath) {
   });
 }
 
+// 'https://bounty-static-test.oss-cn-beijing.aliyuncs.com/bounty-static'
+const CDN_PUBLIC_URL = process.env.CDN_PUBLIC_URL || '';
+
 const vendorPlugin = {
   apply: compiler => {
     compiler.hooks.afterEmit.tap('vendorPlugin', () => {
@@ -142,6 +145,12 @@ module.exports = {
       template: path.resolve(__dirname, 'src', 'index.html'), // 模板
       filename: 'index.html',
       inject: false,
+    }), // 生成Html5文件
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, 'src', 'index-zh.html'), // 模板
+      filename: 'index-zh.html',
+      inject: false,
+      CDN_PUBLIC_URL,
     }), // 生成Html5文件
     new WebpackCdnPlugin({
       modules: cdnModules.map(v => Object.assign({}, v)),
@@ -223,6 +232,7 @@ module.exports = {
           WITHDRAWAL_STATUS_ENUM: appConst.WITHDRAWAL.STATUS,
         },
         ALI_OSS_KEYS: JSON.parse(process.env.JENKINS_ALI_OSS_KEYS || '{}'),
+        CDN_PUBLIC_URL,
         /* eg:
 export ALI_OSS_KEYS=$(cat <<EOF
 {
