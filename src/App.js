@@ -1,10 +1,11 @@
-import React, { PureComponent } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import React, { PureComponent, Fragment } from 'react';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 
 // components
 import Router from './route/router';
+import GameRouter from './route/game';
 import { ToastComp } from './components/Toast';
 import { NoticeComp } from './components/Message/notice';
 import { PageLoading } from './components/PageLoading';
@@ -57,15 +58,22 @@ class App extends PureComponent {
   render() {
     return (
       <BrowserRouter>
-        <PageWrapper id="page-wrapper">
-          <div className="page-holder">
-            <PageHead />
-            <div className="page-content">
-              <Router />
-            </div>
-            <PageFoot />
-          </div>
-        </PageWrapper>
+        <Switch>
+          <Route path="/game">
+            <GameRouter />
+          </Route>
+          <Route>
+            <PageWrapper id="page-wrapper">
+              <div className="page-holder">
+                <PageHead />
+                <div className="page-content">
+                  <Router />
+                </div>
+                <PageFoot />
+              </div>
+            </PageWrapper>
+          </Route>
+        </Switch>
         <ToastComp />
         <NoticeComp />
         <PageLoading />

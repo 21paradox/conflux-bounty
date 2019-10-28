@@ -31,6 +31,7 @@ const MyLikes = lazy(() => import('../pages/UserInfo/my-likes'));
 const MyBounty = lazy(() => import('../pages/Bounty/mybounty'));
 const MySolution = lazy(() => import('../pages/Solution/mysolution'));
 const Faq = lazy(() => import('../pages/Faq'));
+const GameQuitSmoke = lazy(() => import('../pages/GameQuitSmoke'));
 
 function Router() {
   return (

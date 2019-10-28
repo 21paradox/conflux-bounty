@@ -8397,6 +8397,11 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
+phaser@2.6.2:
+  version "2.6.2"
+  resolved "https://registry.npm.taobao.org/phaser/download/phaser-2.6.2.tgz#eb39121725a2149c49f46b5d144318c22bc09249"
+  integrity sha1-6zkSFyWiFJxJ9GtdFEMYwivAkkk=
+
 picomatch@^2.0.4, picomatch@^2.0.5:
   version "2.0.7"
   resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.0.7.tgz#514169d8c7cd0bdbeecc8a2609e34a7163de69f6"
@@ -9261,6 +9266,11 @@ raw-body@^2.2.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+raw-loader@~0.5.1:
+  version "0.5.1"
+  resolved "https://registry.npm.taobao.org/raw-loader/download/raw-loader-0.5.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fraw-loader%2Fdownload%2Fraw-loader-0.5.1.tgz#0c3d0beaed8a01c966d9787bf778281252a979aa"
+  integrity sha1-DD0L6u2KAclm2Xh793goElKpeao=
+
 rc@^1.2.7:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/rc/-/rc-1.2.8.tgz#cd924bf5200a075b83c188cd6b9e211b7fc0d3ed"
@@ -10111,6 +10121,13 @@ screenfull@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-5.0.0.tgz#5c2010c0e84fd4157bf852877698f90b8cbe96f6"
   integrity sha512-yShzhaIoE9OtOhWVyBBffA6V98CDCoyHTsp8228blmqYy1Z5bddzE/4FPiJKlr8DVR4VBiiUyfPzIQPIYDkeMA==
+
+script-loader@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.npm.taobao.org/script-loader/download/script-loader-0.7.2.tgz#2016db6f86f25f5cf56da38915d83378bb166ba7"
+  integrity sha1-IBbbb4byX1z1baOJFdgzeLsWa6c=
+  dependencies:
+    raw-loader "~0.5.1"
 
 sdk-base@^2.0.1:
   version "2.0.1"
