@@ -1,3 +1,13 @@
+// window.onload = function() {
+//   game = new Phaser.Game(640, 960, Phaser.CANVAS, '');
+//   game.state.add('PlayGame', playGame);
+//   game.state.start('PlayGame');
+// };
+
+import ballmg from '../assets/ball.png';
+import targetImg from '../assets/target.png';
+import armImg from '../assets/arm.png';
+
 let game;
 
 const ballDistance = 120;
@@ -6,19 +16,16 @@ const angleRange = [25, 155];
 const visibleTargets = 7;
 const bgColors = [0x62bd18, 0xffbb00, 0xff5300, 0xd21034, 0xff475c, 0x8f16b2];
 
-window.onload = function() {
-  game = new Phaser.Game(640, 960, Phaser.CANVAS, '');
-  game.state.add('PlayGame', playGame);
-  game.state.start('PlayGame');
+export const playGame = function(g) {
+  game = g;
 };
-
-var playGame = function(game) {};
 
 playGame.prototype = {
   preload() {
-    game.load.image('ball', 'assets/ball.png');
-    game.load.image('target', 'assets/target.png');
-    game.load.image('arm', 'assets/arm.png');
+    game.load.image('ball', ballmg);
+    game.load.image('target', targetImg);
+    game.load.image('arm', armImg);
+
     game.scale.pageAlignHorizontally = true;
     game.scale.pageAlignVertically = true;
     game.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
@@ -32,11 +39,15 @@ playGame.prototype = {
     const text = game.add.text(0, game.height - 64, `Best score: ${this.savedData.score.toString()}`, style);
     this.destroy = false;
     this.saveRotationSpeed = rotationSpeed;
+
+    // 背景颜色 和 圆圈颜色
     this.tintColor = bgColors[game.rnd.between(0, bgColors.length - 1)];
     do {
       this.tintColor2 = bgColors[game.rnd.between(0, bgColors.length - 1)];
     } while (this.tintColor == this.tintColor2);
-    game.stage.backgroundColor = this.tintColor;
+    // game.stage.backgroundColor = this.tintColor;
+    game.stage.backgroundColor = '#2a442a';
+
     this.targetArray = [];
     this.steps = 0;
     this.rotatingDirection = game.rnd.between(0, 1);
@@ -45,20 +56,24 @@ playGame.prototype = {
     this.ballGroup = game.add.group();
     this.gameGroup.add(this.targetGroup);
     this.gameGroup.add(this.ballGroup);
+
     this.arm = game.add.sprite(game.width / 2, (game.height / 4) * 2.7, 'arm');
     this.arm.anchor.set(0, 0.5);
     this.arm.tint = this.tintColor2;
     this.ballGroup.add(this.arm);
+
     this.balls = [
       game.add.sprite(game.width / 2, (game.height / 4) * 2.7, 'ball'),
       game.add.sprite(game.width / 2, game.height / 2, 'ball'),
     ];
     this.balls[0].anchor.set(0.5);
-    this.balls[0].tint = this.tintColor2;
+    // this.balls[0].tint = this.tintColor2;
     this.balls[1].anchor.set(0.5);
     this.balls[1].tint = this.tintColor2;
+
     this.ballGroup.add(this.balls[0]);
     this.ballGroup.add(this.balls[1]);
+
     this.rotationAngle = 0;
     this.rotatingBall = 1;
     const target = game.add.sprite(0, 0, 'target');
@@ -67,9 +82,13 @@ playGame.prototype = {
     target.y = this.balls[0].y;
     this.targetGroup.add(target);
     this.targetArray.push(target);
-    game.input.onDown.add(this.changeBall, this);
+    // game.input.onDown.add(this.changeBall, this);
+
+    this.addTarget();
+    this.addTarget();
+
     for (let i = 0; i < visibleTargets; i++) {
-      this.addTarget();
+      // this.addTarget();
     }
   },
   update() {
@@ -80,12 +99,16 @@ playGame.prototype = {
     if (distanceFromTarget < 40 && !this.destroy) {
       this.destroy = true;
     }
+
+    // 旋转 ball和 arm
     this.rotationAngle = (this.rotationAngle + this.saveRotationSpeed * (this.rotatingDirection * 2 - 1)) % 360;
     this.arm.angle = this.rotationAngle + 90;
+
     this.balls[this.rotatingBall].x =
       this.balls[1 - this.rotatingBall].x - ballDistance * Math.sin(Phaser.Math.degToRad(this.rotationAngle));
     this.balls[this.rotatingBall].y =
       this.balls[1 - this.rotatingBall].y + ballDistance * Math.cos(Phaser.Math.degToRad(this.rotationAngle));
+
     const distanceX = this.balls[1 - this.rotatingBall].worldPosition.x - game.width / 2;
     const distanceY = this.balls[1 - this.rotatingBall].worldPosition.y - (game.height / 4) * 2.7;
     this.gameGroup.x = Phaser.Math.linearInterpolation([this.gameGroup.x, this.gameGroup.x - distanceX], 0.05);
@@ -122,8 +145,8 @@ playGame.prototype = {
   },
   addTarget() {
     this.steps++;
-    startX = this.targetArray[this.targetArray.length - 1].x;
-    startY = this.targetArray[this.targetArray.length - 1].y;
+    const startX = this.targetArray[this.targetArray.length - 1].x;
+    const startY = this.targetArray[this.targetArray.length - 1].y;
     const target = game.add.sprite(0, 0, 'target');
     const randomAngle = game.rnd.between(angleRange[0] + 90, angleRange[1] + 90);
     target.anchor.set(0.5);

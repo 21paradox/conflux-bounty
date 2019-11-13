@@ -9,10 +9,12 @@ import { i18nTxt, i18nTxtAsync } from '../../utils';
 // window.p2 = p2;
 // const Phaser = require('phaser/build/phaser.js')
 // window.Phaser = Phaser;
+
 import { loadPhaser } from './utils';
+import { playGame } from './js/game';
 
 // eslint-disable-next-line react/prefer-stateless-function
-class GameQuitSmoke extends Component {
+class GameCirclePath extends Component {
   constructor(...args) {
     super(...args);
     document.title = i18nTxt('1');
@@ -39,33 +41,36 @@ class GameQuitSmoke extends Component {
 
   componentDidMount() {
     loadPhaser().then(() => {
-      const gameBestWidth = 520;
-      const gameBestHeight = 720;
-      const gameBestRatio = gameBestWidth / gameBestHeight;
+      // const gameBestWidth = 520;
+      // const gameBestHeight = 720;
+      // const gameBestRatio = gameBestWidth / gameBestHeight;
 
-      // Get viewport ratio.
-      const viewport_w = window.innerWidth;
-      const viewport_h = window.innerHeight - 10;
-      const viewportRatio = viewport_w / viewport_h;
+      // // Get viewport ratio.
+      // const viewport_w = window.innerWidth;
+      // const viewport_h = window.innerHeight - 10;
+      // const viewportRatio = viewport_w / viewport_h;
 
-      const content = document.getElementById('content');
+      // const content = document.getElementById('content');
 
-      if (gameBestRatio > viewportRatio) {
-        // take viewport height as base value
-        content.style.width = `${viewport_w}px`;
-        content.style.height = `${viewport_w / gameBestRatio}px`;
-      } else if (gameBestRatio < viewportRatio) {
-        // take viewport width as base value
-        content.style.height = `${viewport_h}px`;
-        content.style.width = `${viewport_h * gameBestRatio}px`;
-      }
+      // if (gameBestRatio > viewportRatio) {
+      //   // take viewport height as base value
+      //   content.style.width = `${viewport_w}px`;
+      //   content.style.height = `${viewport_w / gameBestRatio}px`;
+      // } else if (gameBestRatio < viewportRatio) {
+      //   // take viewport width as base value
+      //   content.style.height = `${viewport_h}px`;
+      //   content.style.width = `${viewport_h * gameBestRatio}px`;
+      // }
 
-      const game = new Phaser.Game(gameBestWidth, gameBestHeight, Phaser.CANVAS, 'content');
-      game.state.add('Boot', require('./js/boot').default);
-      game.state.add('MainMenu', require('./js/mainmenu').default);
-      game.state.add('Preload', require('./js/preload').default);
-      game.state.add('Gameplay', require('./js/gameplay').default);
-      game.state.start('Boot');
+      // const game = new Phaser.Game(gameBestWidth, gameBestHeight, Phaser.CANVAS, 'content');
+      // game.state.add('Boot', require('./js/boot').default);
+      // game.state.add('MainMenu', require('./js/mainmenu').default);
+      // game.state.add('Preload', require('./js/preload').default);
+      // game.state.add('Gameplay', require('./js/gameplay').default);
+      // game.state.start('Boot');
+      const game = new Phaser.Game(640, 960, Phaser.CANVAS, '');
+      game.state.add('PlayGame', playGame);
+      game.state.start('PlayGame');
     });
   }
 
@@ -74,4 +79,4 @@ class GameQuitSmoke extends Component {
   }
 }
 
-export default connect()(GameQuitSmoke);
+export default connect()(GameCirclePath);
